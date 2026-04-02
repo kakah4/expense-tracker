@@ -24,11 +24,20 @@ export default function ExpenseChart({ expenses }: { expenses: Expense[] }) {
   if (data.length === 0) return null;
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8">
+    <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }} className="rounded-2xl p-6 mb-8">
       <h2 className="text-white font-semibold mb-4">Expenses by Category</h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
-          <Pie data={data} cx="50%" cy="50%" outerRadius={100} dataKey="value" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            dataKey="value"
+            label={({ name, percent }: { name: string; percent?: number }) =>
+              `${name} ${((percent ?? 0) * 100).toFixed(0)}%`
+            }
+          >
             {data.map((_, index) => (
               <Cell key={index} fill={COLORS[index % COLORS.length]} />
             ))}
